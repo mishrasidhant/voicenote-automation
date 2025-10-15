@@ -1,0 +1,8 @@
+[Unit]
+Description=Process a new voice note via transcription and Fabric
+Documentation=https://github.com/your-username/voicenote-automation
+
+[Service]
+Type=oneshot
+# The placeholder __INSTALL_DIR__ will be replaced by the install script.
+ExecStart=__INSTALL_DIR__/bin/process-voicenote.sh %f
