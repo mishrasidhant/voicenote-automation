@@ -45,9 +45,16 @@ cp "$VOICENOTE_FILE" "$VOICENOTES_ARCHIVE_DIR/$ARCHIVE_FILENAME"
 log_info "Archive successful."
 
 # 2. Transcribe the audio file with whisper.cpp
-log_info "Transcribing using whisper.cpp (model: $WHISPER_MODEL, device: $WHISPER_DEVICE)..."
+log_info "Transcribing using whisper.cpp (model: $WHISPER_MODEL, language: $WHISPER_LANGUAGE) to  $VOICENOTE_FILE..."
 # The output from whisper.cpp CLI is just the text, which is perfect.
-TRANSCRIPTION=$(whisper-cli "$VOICENOTE_FILE" --model "$WHISPER_MODEL" --device "$WHISPER_DEVICE" --compute_type "$WHISPER_COMPUTE_TYPE" --language "$WHISPER_LANGUAGE" --output_format txt --word_timestamps False | sed 's/\[.*\]//g' | tr '\n' ' ' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+TRANSCRIPTION=$(
+    whisper-cli \
+        -m "$HOME/.local/share/whisper.cpp/models/ggml-${WHISPER_MODEL}.bin" \
+        -f "$VOICENOTE_FILE" \
+        -l "$WHISPER_LANGUAGE" \
+        --output-txt \
+    | grep -v '^note:' | tr '\n' ' ' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+)
 
 if [ -z "$TRANSCRIPTION" ]; then
     log_error "Transcription failed or produced no output. Aborting."
