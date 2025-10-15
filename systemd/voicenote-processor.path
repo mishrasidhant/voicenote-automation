@@ -1,10 +1,8 @@
 [Unit]
 Description=Watch for new voice notes to process
-Documentation=https://github.com/your-username/voicenote-automation
+Documentation=https://github.com/mishrasidhant/voicenote-automation
 
 [Path]
-# This watches for a file to be closed after being written to, which is
-# a robust way to handle files from Syncthing.
 PathChanged=%h/voicenotes/in/
 
 [Install]

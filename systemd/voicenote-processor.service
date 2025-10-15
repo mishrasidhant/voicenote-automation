@@ -1,6 +1,6 @@
 [Unit]
 Description=Process a new voice note via transcription and Fabric
-Documentation=https://github.com/your-username/voicenote-automation
+Documentation=https://github.com/mishrasidhant/voicenote-automation
 
 [Service]
 Type=oneshot
